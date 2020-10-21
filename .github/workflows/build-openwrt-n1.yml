@@ -77,14 +77,15 @@ jobs:
         git clone https://github.com/tuanqing/install-program package/myapp/install-program
         sed -i 's#ntfs-3g#antfs-mount#g' package/lean/automount/Makefile
         # helloworld
-        sed -i '5 s/#//' ./feeds.conf.default
+        sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
         # add Lienol's package
         sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
         # n1 install program
         git clone https://github.com/tuanqing/install-program package/install-program
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-
+        sed -i '34 s/$/ +libselinux +libsepol/' feeds/packages/utils/lvm2/Makefile
+        sed -i '34 s/$/ +libselinux/' feeds/packages/utils/vim/Makefile
 
     - name: Load custom configuration
       run: |
