@@ -66,7 +66,6 @@ jobs:
         git clone https://github.com/2512500960/zzu-minieap-openwrt package/myapp/zzu-minieap-openwrt
         git clone https://github.com/tty228/luci-app-serverchan package/myapp/luci-app-serverchan
         git clone https://github.com/liwenjie119/luci-app-koolproxyR package/myapp/luci-app-koolproxyR
-        sed -i 's#ntfs-3g#antfs-mount#g' package/lean/automount/Makefile
         sed -i '11 s/#//' ./feeds.conf.default
         # add Lienol's package
         sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
@@ -100,7 +99,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
+        make -j$(nproc) || make -j1 V=s
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME) >> $GITHUB_ENV"
