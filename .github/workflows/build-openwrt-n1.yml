@@ -75,13 +75,10 @@ jobs:
         git clone https://github.com/tty228/luci-app-serverchan package/myapp/luci-app-serverchan
         git clone https://github.com/liwenjie119/luci-app-koolproxyR package/myapp/luci-app-koolproxyR
         git clone https://github.com/tuanqing/install-program package/myapp/install-program
-        sed -i 's#ntfs-3g#antfs-mount#g' package/lean/automount/Makefile
         # helloworld
         sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
         # add Lienol's package
         sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
-        # n1 install program
-        git clone https://github.com/tuanqing/install-program package/install-program
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         sed -i '34 s/$/ +libselinux +libsepol/' feeds/packages/utils/lvm2/Makefile
@@ -122,7 +119,7 @@ jobs:
           TARGET_DEVICES += Phicomm-n1
         endif\n
         $(eval $(call BuildImage))' >> ./target/linux/armvirt/image/Makefile
-
+        sed -i '/FEATURES+=/ { s/cpiogz //; s/ext4 //; s/ramdisk //; s/squashfs //; }' target/linux/armvirt/Makefile
     - name: Download package
       id: package
       run: |
