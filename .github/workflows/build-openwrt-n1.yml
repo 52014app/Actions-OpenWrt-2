@@ -77,6 +77,8 @@ jobs:
         git clone https://github.com/tuanqing/install-program package/myapp/install-program
         # helloworld
         sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+        # replace antfs 
+        sed -i 's/antfs-mount/ntfs-3g/g' ./package/lean/automount/Makefile
         # add Lienol's package
         sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
         ./scripts/feeds update -a
