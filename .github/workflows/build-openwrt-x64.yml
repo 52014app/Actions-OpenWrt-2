@@ -85,11 +85,17 @@ jobs:
       uses: P3TERX/debugger-action@main
       if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
 
+    - name: config
+      run: |
+        cd openwrt
+        make defconfig
+        cat .config
+
+        
     - name: Download package
       id: package
       run: |
         cd openwrt
-        make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
