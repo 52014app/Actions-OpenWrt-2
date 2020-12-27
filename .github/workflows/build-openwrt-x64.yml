@@ -67,10 +67,12 @@ jobs:
         git clone https://github.com/2512500960/zzu-minieap-openwrt package/myapp/zzu-minieap-openwrt
         git clone https://github.com/tty228/luci-app-serverchan package/myapp/luci-app-serverchan
         git clone https://github.com/liwenjie119/luci-app-koolproxyR package/myapp/luci-app-koolproxyR
-        sed -i '11 s/#//' ./feeds.conf.default
+        sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
         sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
+        sed -i 's/192.168.1.1/192.168.100.1/g' package/base-files/files/bin/config_generate
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        
 
 
     - name: Load custom configuration
@@ -89,6 +91,7 @@ jobs:
       run: |
         cd openwrt
         make defconfig
+        ls
         echo "CONFIG_PACKAGE_libselinux=y" > .config
         echo "CONFIG_PACKAGE_libsepol=y" > .config
         cat .config
