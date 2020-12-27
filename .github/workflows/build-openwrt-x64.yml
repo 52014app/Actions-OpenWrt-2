@@ -91,9 +91,8 @@ jobs:
       run: |
         cd openwrt
         make defconfig
-        ls
-        echo "CONFIG_PACKAGE_libselinux=y" > .config
-        echo "CONFIG_PACKAGE_libsepol=y" > .config
+        sed -i '$a CONFIG_PACKAGE_libselinux=y' .config
+        sed -i '$a CONFIG_PACKAGE_libsepol=y' .config
         cat .config
 
         
