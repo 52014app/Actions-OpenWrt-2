@@ -19,7 +19,7 @@ on:
       - 'newifi3.config'
       - '.github/workflows/build-openwrt-newifi3.yml'
   schedule:
-    - cron: 0 8 * * 5
+    - cron: 0 7 * * 5
   watch:
     types: started
 
